@@ -1,4 +1,6 @@
 import React from 'react';
+import CreateBorderWall from './CreateBorderWall.jsx';
+
 
 export default function RandomMaze(parameters){
     let nodes = parameters.nodes;
@@ -7,22 +9,25 @@ export default function RandomMaze(parameters){
     let wallsPlanted = 0;
     let random = 0
 
-    //To set current isStart false
-    nodes[parameters.START_NODE_ROW][parameters.START_NODE_COL].isStart = false;
-    nodes[parameters.FINISH_NODE_ROW][parameters.FINISH_NODE_COL].isFinish = false;
+    nodes = CreateBorderWall(nodes, TOTAL_ROWS, TOTAL_COLS);
 
     // To generate new startNode
-    const START_NODE_ROW = Math.floor((Math.random())*TOTAL_ROWS);
-    const START_NODE_COL = Math.floor((Math.random())*TOTAL_COLS);
+    let START_NODE_ROW = Math.floor((Math.random())*TOTAL_ROWS);
+    let START_NODE_COL = Math.floor((Math.random())*TOTAL_COLS);
+
+    while(nodes[START_NODE_ROW][START_NODE_COL].isWall){
+        START_NODE_ROW = Math.floor((Math.random())*TOTAL_ROWS);
+        START_NODE_COL = Math.floor((Math.random())*TOTAL_COLS);
+    }
 
     nodes[START_NODE_ROW][START_NODE_COL].isStart = true;
 
     // To generate new finish node
-    const FINISH_NODE_ROW = Math.floor((Math.random())*TOTAL_ROWS);
-    const FINISH_NODE_COL = Math.floor((Math.random())*TOTAL_COLS);
+    let FINISH_NODE_ROW = Math.floor((Math.random())*TOTAL_ROWS);
+    let FINISH_NODE_COL = Math.floor((Math.random())*TOTAL_COLS);
 
-    // Change finishNode if it is same as startNode
-    while(nodes[FINISH_NODE_ROW][FINISH_NODE_COL].isStart){
+    // Change finishNode if it is startNode or wallNode
+    while(nodes[FINISH_NODE_ROW][FINISH_NODE_COL].isStart || nodes[FINISH_NODE_ROW][FINISH_NODE_COL].isWall){
         FINISH_NODE_ROW = Math.floor((Math.random())*TOTAL_ROWS);
         FINISH_NODE_COL = Math.floor((Math.random())*TOTAL_COLS);
     }

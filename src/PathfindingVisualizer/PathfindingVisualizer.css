@@ -2,27 +2,29 @@
     clear: left;
 }
 
-/* .Node{
-    width: 18px;
-    height: 18px;
+.Header{
     float: left;
-    display: block;
-    border:solid 0.8px aquamarine;
-} */
+    height: 70px;
+    width: 95%;
+    padding-left: 120px;
+    padding-top: 13px;
+    box-sizing: border-box;
+    align-content: center;
+    margin: 0px 10px 13px 10px;
+    position: relative;
+}
 
 .Grid{
     margin-left: 10px;
     margin-right: 10px;
     color: black;
+    clear: both;
     /* background: blue; */
     /* border: solid 2px black; */
 }
 
 .VisualizeAlgorithmButton{
-    margin: 10px 40% 1px;
-    height: 50px;
-    width: 200px;
-    border: solid 1px black;
+    height: 40px;
 }
 
 

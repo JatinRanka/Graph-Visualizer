@@ -34,10 +34,14 @@ export default class Main extends React.Component{
         return initialState;
     };
 
-    clearBoard(){
+    clearWalls(){
         const initialState = this.getInitialState();
         this.setState({nodes : initialState});
         console.log(this.state.nodes[0][0]);    
+    }
+
+    clearBoard(){
+        document.location.reload();
     }
 
     componentDidMount(){
@@ -234,15 +238,24 @@ export default class Main extends React.Component{
         }           
     }
 
-    createMaze(nodes, TOTAL_ROWS, TOTAL_COLS){
+    randomMaze(){
+        let nodes = this.state.nodes;
+
+        // Remove all the walls
+        for(let row=0; row<TOTAL_ROWS; row++){
+            for(let col=0; col<TOTAL_COLS; col++){
+                nodes[row][col].isWall = false;
+            }
+        }
+
+        // Set current startNode and finishNode as False
+        nodes[this.state.START_NODE_ROW][this.state.START_NODE_COL].isStart = false;
+        nodes[this.state.FINISH_NODE_ROW][this.state.FINISH_NODE_COL].isFinish = false;
+
         const parameters = {
-            nodes : this.getInitialState(),
+            nodes,
             TOTAL_ROWS,
             TOTAL_COLS,
-            START_NODE_ROW : this.state.START_NODE_ROW,
-            START_NODE_COL : this.state.START_NODE_COL,
-            FINISH_NODE_ROW : this.state.FINISH_NODE_ROW,
-            FINISH_NODE_COL : this.state.FINISH_NODE_COL
         };
 
         const randomMazeValues = RandomMaze(parameters);
@@ -292,36 +305,49 @@ export default class Main extends React.Component{
     render(){
         return(
             <div>
-                <select className="Select" id="Select">
-                    <option value="none">none</option>
-                    <option value="bfs"> bfs </option>
-                    <option value="dfs"> dfs </option>                                  
-                </select>
-                <button className="Clear"
-                        onClick = {() => this.clearBoard()}
-                >
-                    Clear Walls</button>
-                <button 
-                    className="VisualizeAlgorithmButton"
-                    onClick = {() => this.visualizeAlgorithm(this.state.nodes)}
-                >
-                    VISUALIZE ALGORITHM
-                </button>
+                <div class="Header">
+                    
+                    <button onClick = {() => this.clearWalls()}>
+                        Clear Walls
+                    </button>
 
-                <button onClick={() => this.createMaze(this.state.nodes, TOTAL_ROWS, TOTAL_COLS)}
-                >
-                    random maze
-                </button>
+                    <button onClick={() => this.clearBoard()}>
+                        Clear Board 
+                    </button>
 
-                <button onClick={() => this.RecursiveDivisionMaze()}
-                >
-                    Recursive Division Maze
-                </button>
+                    <select className="Select" id="Select">
+                        <option value="none">Select type of algorithm</option>
+                        <option value="bfs"> bfs </option>
+                        <option value="dfs"> dfs </option>                                  
+                    </select>
+
+
+                    <button 
+                        className="VisualizeAlgorithmButton"
+                        onClick = {() => this.visualizeAlgorithm(this.state.nodes)}
+                    >
+                        VISUALIZE ALGORITHM
+                    </button>
+                
+                    <button
+                        className = "RandomMaze" 
+                        onClick={() => this.randomMaze()}
+                    >
+                        random maze
+                    </button> 
+
+                    <button onClick={() => this.RecursiveDivisionMaze()}
+                    >
+                        Recursive Division Maze
+                    </button>
+
+                </div>
 
 
                 <div className = "Grid">
                     {this.renderGrid(this.state.nodes)}
                 </div>
+
             </div>
         );
     }
