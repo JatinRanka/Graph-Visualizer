@@ -11,7 +11,8 @@ export default function BfsAlgorithm(nodes, startNode, finishNode, TOTAL_ROWS, T
     parents[startNode.key] = startNode.key;
     let isPathFound = false;
 
-    console.log(finishNode.isWall);
+    // console.log(nodes[0][10]);
+    // console.log(nodes[3][10]);
 
     while(queue.length !== 0){
         let currentNode = queue.shift();
@@ -43,6 +44,9 @@ export default function BfsAlgorithm(nodes, startNode, finishNode, TOTAL_ROWS, T
     if(isPathFound){
         pathNodes = getPathNodes(finishNode, startNode);
     }
+
+    // console.log(nodes[0][10]);
+    // console.log(nodes[3][10]);
     return [visitedNodes, pathNodes];
 }
 

@@ -5,6 +5,9 @@ import BfsAlgorithm from '../Algorithms/BfsAlgorithm.jsx';
 import DfsAlgorithm from '../Algorithms/DfsAlgorithm.jsx';
 import RandomMaze from '../mazeAlgorithms/RandomMaze.jsx';
 import RecursiveDivision from '../mazeAlgorithms/RecursiveDivision';
+import _ from "lodash" // Import the entire lodash library
+
+import { delay } from 'q';
 
 const TOTAL_ROWS = 27;
 const TOTAL_COLS = 61;
@@ -190,38 +193,42 @@ export default class Main extends React.Component{
         });
     }
 
+
     visualizeAlgorithm(nodes){
+
+        let updatedNodes = _.cloneDeep(nodes);
         const type = document.getElementById('Select').value;
         if(type === "none"){
             window.alert("Select type of algorithm.");
             return;
         }
 
-        const startNode = nodes[this.state.START_NODE_ROW][this.state.START_NODE_COL];
-        const finishNode = nodes[this.state.FINISH_NODE_ROW][this.state.FINISH_NODE_COL];
+        const startNode = updatedNodes[this.state.START_NODE_ROW][this.state.START_NODE_COL];
+        const finishNode = updatedNodes[this.state.FINISH_NODE_ROW][this.state.FINISH_NODE_COL];
         let visitedNodes = [];
         let visitedNodesAndPath = [];
+
+
         if(type==="bfs"){
-            visitedNodesAndPath = BfsAlgorithm(nodes, startNode, finishNode, TOTAL_ROWS, TOTAL_COLS);
+            visitedNodesAndPath = BfsAlgorithm(updatedNodes, startNode, finishNode, TOTAL_ROWS, TOTAL_COLS);
         }else{
-            visitedNodesAndPath = DfsAlgorithm(nodes, startNode, finishNode, TOTAL_ROWS, TOTAL_COLS);
+            visitedNodesAndPath = DfsAlgorithm(updatedNodes, startNode, finishNode, TOTAL_ROWS, TOTAL_COLS);
         }
 
         visitedNodes = visitedNodesAndPath[0];
         let time_end = 0;
-        for(let i=0; i<visitedNodes.length; i++){
-            let row = visitedNodes[i].row;
-            let col = visitedNodes[i].col;
 
+        for (let i=0; i<visitedNodes.length; i++){
             setTimeout(() => {
-                if(!nodes[row][col].isStart && !nodes[row][col].isFinish){
-                    document.getElementById(`node-${row}-${col}`).className = "Node-isVisited";
-                    // nodes[row][col].isVisited = true;
-                    // this.setState({nodes});
-                }
-            }, i*5);
-            time_end = i*5;
+                let row = visitedNodes[i].row;
+                let col = visitedNodes[i].col;
+
+                nodes[row][col].isVisited = true;
+                this.setState({nodes});
+            }, i*15);
+            time_end = i*15;
         }
+       
 
         const pathNodes = visitedNodesAndPath[1];
         for(let i=0; i<pathNodes.length; i++){
@@ -231,11 +238,13 @@ export default class Main extends React.Component{
             setTimeout(() => {
                 if(!nodes[row][col].isStart && !nodes[row][col].isFinish){
                     document.getElementById(`node-${row}-${col}`).className = "Node-isPath";
+                    // nodes = this.state.nodes;
                     // nodes[row][col].isPath = true;
                     // this.setState({nodes});
                 }
             }, (i*25)+time_end);
-        }           
+        }  
+
     }
 
     randomMaze(){
@@ -316,8 +325,8 @@ export default class Main extends React.Component{
                     </button>
 
                     <select className="Select" id="Select">
-                        <option value="none">Select type of algorithm</option>
                         <option value="bfs"> bfs </option>
+                        <option value="none">Select type of algorithm</option>
                         <option value="dfs"> dfs </option>                                  
                     </select>
 
