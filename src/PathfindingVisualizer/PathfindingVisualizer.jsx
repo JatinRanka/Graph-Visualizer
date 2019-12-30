@@ -319,8 +319,8 @@ export default class Main extends React.Component{
 
                     <select className="Select" id="Select">
                         <option value="none">Select type of algorithm</option>
-                        <option value="bfs"> bfs </option>
-                        <option value="dfs"> dfs </option>                                  
+                        <option value="bfs"> Breadth First Search </option>
+                        <option value="dfs"> Depth First Search </option>                                  
                     </select>
 
 
@@ -335,7 +335,7 @@ export default class Main extends React.Component{
                         className = "RandomMaze" 
                         onClick={() => this.randomMaze()}
                     >
-                        random maze
+                        Random Maze
                     </button> 
 
                     <button onClick={() => this.RecursiveDivisionMaze()}
