@@ -1,5 +1,8 @@
 import React from 'react';
 import './Node.css';
+import targetIcon from './../images/target.svg';
+import startIcon from './../images/start.svg';
+// const targetImage = 
 
 export default class Node extends React.Component{
     render(){
@@ -31,8 +34,9 @@ export default class Node extends React.Component{
         }
 
         const className = "Node" + extendedClassName;
-        let target = "";
-        if(isFinish) target = "🎯";
+        let icon = "";
+        if(isFinish) icon = <img src={targetIcon}/>;
+        if(isStart) icon = <img src={startIcon}/>;
         return(
             <div 
                 id = {`node-${row}-${col}`}
@@ -43,7 +47,7 @@ export default class Node extends React.Component{
                 onMouseLeave = {() => this.props.onMouseLeave(row, col)}
                 onMouseUp = {() => this.props.onMouseUp(row, col)}
             >
-                {/* {target} */}
+                {icon}
             </div>
         );
     }

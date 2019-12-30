@@ -11,8 +11,8 @@
     width: 20px;
     height:20px;
     float: left;
-    /* border: solid 0.1px aquamarine; */
-    background: red;
+    border: solid 0.1px aquamarine;
+    /* background: red; */
     box-sizing: border-box;
 }
 
@@ -21,8 +21,8 @@
     width: 20px;
     height: 20px;
     float: left;
-    /* border: solid 0.1px aquamarine; */
-    background: green;
+    border: solid 0.1px aquamarine;
+    /* background: green; */
     box-sizing: border-box;
 }
 
@@ -35,30 +35,57 @@
     box-sizing: border-box;
 }
 
-.Node-isVisited{
-    width: 20px;
-    height: 20px;
-    float: left;
-    border: solid 0.1px rgb(186, 233, 253);
-    background: lightblue;
-    animation-name: Node-animation;
-    animation-duration: 4s;
-    box-sizing: border-box;
-}
 
 .Node-isPath{
     width: 20px;
     height: 20px;
     float: left;
     /* border: solid 0.1px aquamarine; */
-    background: #dbe823;
-    /* animation-name: Node-animation; */
+    background: rgb(255, 254, 106);;
+    animation-name: Node-animation;
     animation-duration: 3s;
     box-sizing: border-box;
+} 
+
+.Node-isVisited{
+    width: 20px;
+    height: 20px;
+    float: left;
+    border: solid 0.1px rgb(186, 233, 253);
+    background: #50C7C7;
+    box-sizing: border-box;
+    animation-name: visitedAnimation;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
 }
 
-@keyframes Node-animation{
-    from {background-color: darkblue;}
-    to {background-color: lightblue;}
+@keyframes visitedAnimation {
+    0% {
+      transform: scale(0.3);
+      background-color: rgba(0, 0, 66, 0.75);
+      border-radius: 100%;
+    }
+  
+    50% {
+      background-color: rgba(17, 104, 217, 0.75);
+    }
+  
+    75% {
+      transform: scale(1.2);
+      background-color: rgba(0, 217, 159, 0.75);
+    }
+  
+    100% {
+      transform: scale(1);
+      background-color: rgba(0, 190, 218, 0.75);
+    }
 }
+
+
+
 

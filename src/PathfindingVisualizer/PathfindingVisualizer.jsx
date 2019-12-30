@@ -17,9 +17,9 @@ export default class Main extends React.Component{
         super(props)
         this.state = {
             START_NODE_ROW : 11,
-            START_NODE_COL : 17,
+            START_NODE_COL : 20,
             FINISH_NODE_ROW : 11,
-            FINISH_NODE_COL : 42,
+            FINISH_NODE_COL : 38,
             nodes : this.getInitialState(),
             isMousePressed : false,
             isStartPressed : false
@@ -48,12 +48,6 @@ export default class Main extends React.Component{
     }
 
     componentDidMount(){
-        this.setState({
-            // START_NODE_ROW : 11,
-            // START_NODE_COL : 17,
-            // FINISH_NODE_ROW : 11,
-            // FINISH_NODE_COL : 42,
-        });
         let nodes = [];
         for (let row=0; row<TOTAL_ROWS; row++){
             nodes.push([]);
@@ -69,9 +63,9 @@ export default class Main extends React.Component{
 
     createNode(row, col){
         const START_NODE_ROW = 11;
-        const START_NODE_COL = 17;
+        const START_NODE_COL = 20;
         const FINISH_NODE_ROW = 11;
-        const FINISH_NODE_COL = 42;
+        const FINISH_NODE_COL = 38;
         return({
             key : row*100+col,
             col,
@@ -177,11 +171,11 @@ export default class Main extends React.Component{
                                 isVisited = {isVisited}
                                 isWall = {isWall}  
                                 isPath = {isPath} 
-                                onClick = {() => this.onClickNode(row, col)}
-                                onMouseDown = {() => this.onMouseDown(row, col)}
+                                onClick = {(e) => this.onClickNode(row, col)}
+                                onMouseDown = {(e) => this.onMouseDown(row, col)}
                                 onMouseEnter = {() => this.onMouseEnter(row, col)} 
                                 onMouseLeave = {() => this.onMouseLeave(row, col)} 
-                                onMouseUp = {() => this.onMouseUp(row, col)}
+                                onMouseUp = {(e) => this.onMouseUp(row, col)}
                                 // onMouseOver = {() => this.onMouseOver(row, col)}                       
                             >
                                 
@@ -192,7 +186,6 @@ export default class Main extends React.Component{
             });
         });
     }
-
 
     visualizeAlgorithm(nodes){
 
@@ -222,11 +215,11 @@ export default class Main extends React.Component{
             setTimeout(() => {
                 let row = visitedNodes[i].row;
                 let col = visitedNodes[i].col;
-
-                nodes[row][col].isVisited = true;
-                this.setState({nodes});
-            }, i*15);
-            time_end = i*15;
+                if(!nodes[row][col].isStart && !nodes[row][col].isFinish){
+                    document.getElementById(`node-${row}-${col}`).className = "Node-isVisited";
+                }
+            }, i*20);
+            time_end = i*20+500;
         }
        
 
@@ -325,8 +318,8 @@ export default class Main extends React.Component{
                     </button>
 
                     <select className="Select" id="Select">
-                        <option value="bfs"> bfs </option>
                         <option value="none">Select type of algorithm</option>
+                        <option value="bfs"> bfs </option>
                         <option value="dfs"> dfs </option>                                  
                     </select>
 
@@ -376,3 +369,4 @@ const getNewGridWithToggled = (nodes, row, col) => {
     updatedNodes[row][col].isWall = !nodes[row][col].isWall;
     return updatedNodes;
 };
+
